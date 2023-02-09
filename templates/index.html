@@ -1,0 +1,109 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" <title align='center'>Hello, world!</title>
+</head>
+
+<body>
+    <h1 class="alert alert-warning text-center">THIS IS SIMPLE OPERATION CRUD</h1>
+
+    <div>
+
+        {% for message in messages %}
+        <p class="alert alert-succes mt-3"> {{message}}</p>
+        {% endfor %} {% comment %} Update{% endcomment %} {% if sel_item %}
+
+        <form method="POST" action="{% url 'update_item' sel_item.id%}">
+            {% csrf_token %}
+
+
+            <div class="form-group container mt-3">
+                <label for="nom">Nom</label><br>
+                <input type="text" class="form-control" name="nom" value="{{sel_item.nom}}" aria-describedby="emailHelp" required><br>
+            </div>
+
+
+            <div class="form-group container mt-3">
+                <label for="Email">Email: </label><br>
+                <input type="email" class="form-control" name="email" value="{{sel_item.email}}" id="email" aria-describedby="emailHelp" required><br>
+            </div>
+
+
+            <div class="form-group container mt-3">
+                <label for="Password">Password</label>
+                <input type="password" class="form-control" name="mdp" value="{{sel_item.mdp}}" required>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success ">Update</button><br></br>
+            </div>
+        </form>
+
+
+        {% else %} {% comment %} Create {% endcomment %}
+
+        <form method="POST" action="{% url 'add_item'%}">
+            {% csrf_token %}
+
+
+            <div class="form-group container mt-3">
+                <label for="nom">Nom</label><br>
+                <input type="text" class="form-control" name="nom" aria-describedby="emailHelp" placeholder="Enter email" required><br>
+            </div>
+
+
+            <div class="form-group container mt-3">
+                <label for="Email">Email: </label><br>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required><br>
+            </div>
+
+
+            <div class="form-group container mt-3">
+                <label for="Password">Password</label>
+                <input type="password" class="form-control" name="mdp" placeholder="Password" required>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success ">Save</button><br></br>
+            </div>
+        </form>
+
+        {% endif %}
+    </div>
+    <table class="table group mt">
+        <thead>
+            <tr>
+
+                <!-- <th scope="col"> Id</th> -->
+                <th scope="col"> Nom</th>
+                <!--          <th scope="col"> Email</th>-->
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            {% for i in item_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.nom}}</td>
+
+                <td><a href="{% url 'edit_item' i.id%}" class="btn btn-danger"> Edit</a></td>
+                <td><a href="{% url 'delete_item' i.id %}" class="btn btn-warning"> Delete</a></td>
+
+
+            </tr>
+
+            {% endfor%}
+        </tbody>
+    </table>
+</body>
+
+</html>
